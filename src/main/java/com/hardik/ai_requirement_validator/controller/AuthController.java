@@ -2,9 +2,11 @@ package com.hardik.ai_requirement_validator.controller;
 
 import com.hardik.ai_requirement_validator.common.RequirementApiResponse;
 import com.hardik.ai_requirement_validator.dto.LoginRequest;
+import com.hardik.ai_requirement_validator.exception.BusinessException;
 import com.hardik.ai_requirement_validator.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,13 +32,20 @@ public class AuthController {
         );
         BCryptPasswordEncoder encoder1 = new BCryptPasswordEncoder();
         System.out.println(encoder.encode("admin"));
-        Authentication authentication =
-                authenticationManager.authenticate(
-                        new UsernamePasswordAuthenticationToken(
-                                request.getUsername(),
-                                request.getPassword()
-                        )
-                );
+        Authentication authentication;
+        //try {
+             authentication =
+                    authenticationManager.authenticate(
+                            new UsernamePasswordAuthenticationToken(
+                                    request.getUsername(),
+                                    request.getPassword()
+                            )
+                    );
+//        }
+//        catch(BadCredentialsException e) {
+//            throw new BusinessException("Invalid username or password");
+//        }
+
 
         String token = jwtUtil.generateToken(authentication.getName());
 

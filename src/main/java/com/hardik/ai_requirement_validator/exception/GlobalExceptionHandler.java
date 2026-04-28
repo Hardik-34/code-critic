@@ -2,6 +2,7 @@ package com.hardik.ai_requirement_validator.exception;
 
 import com.hardik.ai_requirement_validator.common.RequirementApiResponse;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,6 +41,16 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public RequirementApiResponse<Object> customException(BusinessException exception){
         return RequirementApiResponse.builder().isSuccess(false).message(exception.getMessage()).data(null).build();
+    }
+    @ExceptionHandler(BadCredentialsException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public RequirementApiResponse<Object> handleBadCredentials(BadCredentialsException ex) {
+        return RequirementApiResponse.builder()
+                .isSuccess(false)
+                .message("Entered Password or Login Id is incorrect")
+                .data(null)
+                .build();
+
     }
 
 }

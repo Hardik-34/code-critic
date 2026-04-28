@@ -23,6 +23,7 @@ public class JwtUtil {
     private long expiration;
 
     public String generateToken(String userName) {
+        System.out.println("Expiration: " + expiration);
         return Jwts.builder()
                 .setSubject(userName)
                 .setIssuedAt(new Date())

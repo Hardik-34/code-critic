@@ -24,6 +24,10 @@ public class RequirementController {
                 @Valid @RequestBody RequirementRequest request) {
 
             RequirementResponse response= service.createRequirement(request);
-            return RequirementApiResponse.<RequirementResponse>builder().isSuccess(true).message("Requirement created successfully").data(response).build();
+            return RequirementApiResponse.<RequirementResponse>builder()
+                    .isSuccess(true)
+                    .message("Requirement created successfully")
+                    .data(response)
+                    .build();
     }
 }
